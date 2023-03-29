@@ -1,6 +1,14 @@
+//
+// SPDX-License-Identifier: BSD-3-Clause
+//
+
 package redfish
 
-import "github.com/stmcginnis/gofish/common"
+import (
+	"encoding/json"
+
+	"github.com/stmcginnis/gofish/common"
+)
 
 type Protocol struct {
 	// The protocol port
@@ -12,8 +20,24 @@ type Protocol struct {
 type HTTPS struct {
 	Protocol
 
-	// Certificates shall be a link to HTTP certificates resource
-	Certificates string
+	// certificates shall be a link to HTTP certificates resource
+	certificates string
+}
+
+func (https *HTTPS) UnmarshalJSON(b []byte) error {
+	type temp HTTPS
+
+	var t struct {
+		temp
+		Certificates common.Link
+	}
+	err := json.Unmarshal(b, &t)
+	if err != nil {
+		return err
+	}
+	*https = HTTPS(t.temp)
+	https.certificates = t.Certificates.String()
+	return nil
 }
 
 type NTP struct {
@@ -204,4 +228,11 @@ type NetworkProtocolSettings struct {
 	// The settings for this manager's virtual media support that
 	// apply to all system instances controlled by this manager
 	VirtualMedia Protocol
+	// The OEM extension property
+	Oem json.RawMessage
+}
+
+func GetNetworkProtocol(c common.Client, uri string) (*NetworkProtocolSettings, error) {
+	var networkProtocolSettings NetworkProtocolSettings
+	return &networkProtocolSettings, networkProtocolSettings.Get(c, uri, &networkProtocolSettings)
 }
