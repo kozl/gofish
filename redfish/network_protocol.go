@@ -230,6 +230,25 @@ type NetworkProtocolSettings struct {
 	VirtualMedia Protocol
 	// The OEM extension property
 	Oem json.RawMessage
+	// rawData holds the original serialized JSON so we can compare updates.
+	rawData []byte
+}
+
+func (networkProtocol *NetworkProtocolSettings) UnmarshalJSON(b []byte) error {
+	type temp NetworkProtocolSettings
+	var t struct {
+		temp
+	}
+
+	err := json.Unmarshal(b, &t)
+	if err != nil {
+		return err
+	}
+
+	*networkProtocol = NetworkProtocolSettings(t.temp)
+
+	networkProtocol.rawData = b
+	return nil
 }
 
 func GetNetworkProtocol(c common.Client, uri string) (*NetworkProtocolSettings, error) {
