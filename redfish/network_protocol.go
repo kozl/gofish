@@ -6,6 +6,7 @@ package redfish
 
 import (
 	"encoding/json"
+	"reflect"
 
 	"github.com/stmcginnis/gofish/common"
 )
@@ -249,6 +250,40 @@ func (networkProtocol *NetworkProtocolSettings) UnmarshalJSON(b []byte) error {
 
 	networkProtocol.rawData = b
 	return nil
+}
+
+// Update commits updates to this object's properties to the running system.
+func (networkProtocol *NetworkProtocolSettings) Update() error {
+	// Get a representation of the object's original state so we can find what
+	// to update.
+	original := new(NetworkProtocolSettings)
+	err := original.UnmarshalJSON(networkProtocol.rawData)
+	if err != nil {
+		return err
+	}
+
+	readWriteFields := []string{
+		"DHCP",
+		"DHCPv6",
+		"HTTP",
+		"HTTPS",
+		"IPMI",
+		"KVMIP",
+		"NTP",
+		"Proxy",
+		"RDP",
+		"RFB",
+		"SNMP",
+		"SSDP",
+		"SSH",
+		"Telnet",
+		"VirtualMedia",
+	}
+
+	originalElement := reflect.ValueOf(original).Elem()
+	currentElement := reflect.ValueOf(networkProtocol).Elem()
+
+	return networkProtocol.Entity.Update(originalElement, currentElement, readWriteFields)
 }
 
 func GetNetworkProtocol(c common.Client, uri string) (*NetworkProtocolSettings, error) {
