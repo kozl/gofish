@@ -8,6 +8,8 @@ import (
 	"encoding/json"
 	"strings"
 	"testing"
+
+	"github.com/stmcginnis/gofish/common"
 )
 
 var networkProtocolBody = strings.NewReader(
@@ -146,5 +148,33 @@ func TestNetworkProtocol(t *testing.T) {
 	}
 	if result.rawData == nil {
 		t.Errorf("rawData shouldn't be nil")
+	}
+}
+
+func TestNetworkProtocol_Update(t *testing.T) {
+	var result NetworkProtocolSettings
+	err := json.NewDecoder(networkProtocolBody).Decode(&result)
+
+	if err != nil {
+		t.Errorf("Error decoding JSON: %s", err)
+	}
+
+	testClient := &common.TestClient{}
+	result.SetClient(testClient)
+
+	result.NTP.ProtocolEnabled = true
+	result.NTP.NTPServers = []string{"0.ru.pool.ntp.org", "1.ru.pool.ntp.org"}
+
+	err = result.Update()
+	if err != nil {
+		t.Errorf("Error making Update call: %s", err)
+	}
+	calls := testClient.CapturedCalls()
+	if len(calls) == 0 {
+		t.Fatal("No calls were made")
+	}
+
+	if calls[0].Payload != "map[NTP:map[NTPServers:[0.ru.pool.ntp.org 1.ru.pool.ntp.org]]]" {
+		t.Errorf("Unexpected NTP update payload: %s", calls[0].Payload)
 	}
 }
