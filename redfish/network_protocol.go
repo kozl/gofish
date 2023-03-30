@@ -60,17 +60,17 @@ const (
 	// SNMP community string authentication
 	SNMPAuthCommunityString SNMPAuthenticationProtocol = "CommunityString"
 	// HMAC-MD5-96 authentication
-	SNMPAuthHMAC_MD5 SNMPAuthenticationProtocol = "HMAC_MD5"
+	SNMPAuthHMAC_MD5 SNMPAuthenticationProtocol = "HMAC_MD5" // nolint
 	// HMAC-SHA-96 authentication
-	SNMPAuthHMAC_SHA96 SNMPAuthenticationProtocol = "HMAC_SHA96"
+	SNMPAuthHMAC_SHA96 SNMPAuthenticationProtocol = "HMAC_SHA96" // nolint
 	// HMAC-128-SHA-224 authentication
-	SNMPAuthHMAC128_SHA224 SNMPAuthenticationProtocol = "HMAC128_SHA224"
+	SNMPAuthHMAC128_SHA224 SNMPAuthenticationProtocol = "HMAC128_SHA224" // nolint
 	// HMAC-192-SHA-256 authentication
-	SNMPAuthHMAC192_SHA256 SNMPAuthenticationProtocol = "HMAC192_SHA256"
+	SNMPAuthHMAC192_SHA256 SNMPAuthenticationProtocol = "HMAC192_SHA256" // nolint
 	// HMAC-256-SHA-384 authentication
-	SNMPAuthHMAC256_SHA384 SNMPAuthenticationProtocol = "HMAC256_SHA384"
+	SNMPAuthHMAC256_SHA384 SNMPAuthenticationProtocol = "HMAC256_SHA384" // nolint
 	// HMAC-384-SHA-512 authentication
-	SNMPAuthHMAC384_SHA512 SNMPAuthenticationProtocol = "HMAC384_SHA512"
+	SNMPAuthHMAC384_SHA512 SNMPAuthenticationProtocol = "HMAC384_SHA512" // nolint
 )
 
 type SNMPCommunityAccessMode string
@@ -99,9 +99,9 @@ const (
 	// Encryption is determined by account settings
 	AccountEncryption SNMPEncryptionProtocol = "Account"
 	// CBC-DES encryption
-	CBC_DES_Encryption SNMPEncryptionProtocol = "CBC_DES"
+	CBC_DES_Encryption SNMPEncryptionProtocol = "CBC_DES" // nolint
 	// CFB128-AES-128 encryption
-	CFB128_AES128_Encryption SNMPEncryptionProtocol = "CFB128_AES128"
+	CFB128_AES128_Encryption SNMPEncryptionProtocol = "CFB128_AES128" // nolint
 )
 
 type EngineId struct {
