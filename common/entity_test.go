@@ -3,8 +3,6 @@ package common
 import (
 	"reflect"
 	"testing"
-
-	"github.com/stretchr/testify/assert"
 )
 
 type nestedStruct struct {
@@ -199,7 +197,9 @@ func TestGetPatchPayloadFromUpdate(t *testing.T) {
 				reflect.ValueOf(tc.originalEntity).Elem(),
 				reflect.ValueOf(tc.updatedEntity).Elem(),
 			)
-			assert.Equal(t, tc.expected, payload)
+			if !reflect.DeepEqual(payload, tc.expected) {
+				t.Errorf("expected %+v payload, got %+v", tc.expected, payload)
+			}
 		})
 	}
 }
