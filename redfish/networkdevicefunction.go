@@ -8,7 +8,7 @@ import (
 	"encoding/json"
 	"reflect"
 
-	"github.com/stmcginnis/gofish/common"
+	"github.com/kozl/gofish/common"
 )
 
 // AuthenticationMethod is the method used for authentication.

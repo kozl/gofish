@@ -24,8 +24,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/stmcginnis/gofish/common"
-	"github.com/stmcginnis/gofish/redfish"
+	"github.com/kozl/gofish/common"
+	"github.com/kozl/gofish/redfish"
 )
 
 const userAgent = "gofish/1.0"

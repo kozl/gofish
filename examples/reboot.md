@@ -12,7 +12,7 @@ import (
 	"fmt"
 
 	"github.com/stmcginnis/gofish"
-	"github.com/stmcginnis/gofish/redfish"
+	"github.com/kozl/gofish/redfish"
 )
 
 func main() {
