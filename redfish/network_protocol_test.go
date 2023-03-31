@@ -12,8 +12,7 @@ import (
 	"github.com/stmcginnis/gofish/common"
 )
 
-var networkProtocolBody = strings.NewReader(
-	`{
+var networkProtocolBody = `{
     "SNMP": {
         "EnableSNMPv3": false,
         "EngineId": {
@@ -126,11 +125,11 @@ var networkProtocolBody = strings.NewReader(
     "DHCPv6": {
         "ProtocolEnabled": true
     }
-}`)
+}`
 
 func TestNetworkProtocol(t *testing.T) {
 	var result NetworkProtocolSettings
-	err := json.NewDecoder(networkProtocolBody).Decode(&result)
+	err := json.NewDecoder(strings.NewReader(networkProtocolBody)).Decode(&result)
 
 	if err != nil {
 		t.Errorf("Error decoding JSON: %s", err)
@@ -153,7 +152,7 @@ func TestNetworkProtocol(t *testing.T) {
 
 func TestNetworkProtocol_Update(t *testing.T) {
 	var result NetworkProtocolSettings
-	err := json.NewDecoder(networkProtocolBody).Decode(&result)
+	err := json.NewDecoder(strings.NewReader(networkProtocolBody)).Decode(&result)
 
 	if err != nil {
 		t.Errorf("Error decoding JSON: %s", err)
